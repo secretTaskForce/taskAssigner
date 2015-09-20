@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'comic_zine_otregular';
+  src: url('./comiczineot_regular_macroman/comic_zine_ot-webfont.eot');
+  src: url('./comiczineot_regular_macroman/comic_zine_ot-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./comiczineot_regular_macroman/comic_zine_ot-webfont.woff') format('woff'),
+       url('./comiczineot_regular_macroman/comic_zine_ot-webfont.ttf') format('truetype'),
+       url('./comiczineot_regular_macroman/comic_zine_ot-webfont.svg#comic_zine_otregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  background: url(Lightning-Bolt.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 10px;
+  font-family: 'comic_zine_otregular', sans-serif;
+  font-size: 75px;
+  color: white;
+}
+
+body {
+  color: white;
+}
