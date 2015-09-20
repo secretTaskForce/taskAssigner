@@ -23,7 +23,7 @@ var Views = (function() {
       this.model.set('currentUser', false);
       this.remove();
       $('#app').hide();
-      $('#users-view').show();
+      $('#login').show();
     }
   });
 
@@ -72,7 +72,7 @@ var Views = (function() {
     },
     login: function() {
       this.render();
-      $('#users-view').hide();
+      $('#login').hide();
       $('#app').show();
     }
   });
