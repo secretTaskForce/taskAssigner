@@ -12,7 +12,7 @@ var Models = (function() {
       currentUser: false
   	},
     createView: function() {
-      var view = new UserView({model: this});
+      var view = new Views.UserView({model: this});
       view.render();
       $('#app').prepend(view.$el);
     }
