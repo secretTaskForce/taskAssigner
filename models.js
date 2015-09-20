@@ -1,6 +1,6 @@
 'use strict';
 
-var models = (function() {
+var Models = (function() {
 
   // ----------------------------------------------------------------------------
   // Users
@@ -41,13 +41,13 @@ var models = (function() {
   // Export
   // ----------------------------------------------------------------------------
 
-  var models = {
+  var Models = {
     User: User,
     Users: Users,
     Task: Task,
     Tasks: Tasks
   };
 
-  return models;
+  return Models;
 
 })();

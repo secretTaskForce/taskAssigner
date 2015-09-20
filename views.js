@@ -1,6 +1,6 @@
 'use strict';
 
-var views = (function() {
+var Views = (function() {
 
   // ----------------------------------------------------------------------------
   // Users
@@ -132,13 +132,13 @@ var views = (function() {
   // Export
   // ----------------------------------------------------------------------------
 
-  var views = {
+  var Views = {
     UserView: UserView,
     UsersView: UsersView,
     TaskView: TaskView,
     TasksView: TasksView
   };
 
-  return views;
+  return Views;
 
 })();
