@@ -1,0 +1,11 @@
+TASKS
+
+Add assignee, creator, and status fields to task model
+
+Add ability to set above attributes and display them accordingly
+
+Create a view (or a part of tasksView) to display only users tasks
+
+Create a view (or a part of tasksView) to display only unassigned tasks
+
+Styles
