@@ -86,6 +86,9 @@ var Views = (function() {
     render: function() {
   		var title = '<h2 class="title">' + this.model.get('title') + '</h2>';
   		var description = '<p class="description">' + this.model.get('description') + '</p>';
+  		var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
+  		var assignee = '<h5 class="assignee">' + this.model.get('assignee') + '</h5>';
+  		var status = '<h5 class="status">' + this.model.get('status') + '</h5>';
   		this.$el.html(title + description);
   	},
     initialize: function () {
@@ -125,6 +128,38 @@ var Views = (function() {
       $('#title-input').val('');
       $('#description-input').val('');
       this.$el.append(view.$el);
+    }
+  });
+
+  var UnassignedTasksView = Backbone.View.extend({
+    render: function() {
+      var tasks = this.collection.where('status', 'unassigned');
+      var views = []
+      tasks.each(function(model) {
+        views.push(new TaskView({ model: model}));
+        this.$el.append(new TaskView({ model: model}));
+      });
+      this.$el.append(view.$el);
+    },
+    events : {
+      'change #assignee-list': 'assignTask',
+      'change #status-list': 'changeStatus',
+    },
+    assignTask: function() {
+      this.model.set('assignee', $('#assignee-list').val());
+    },
+    changeStatus: function() {
+      this.model.set('assignee', $('#status-list').val()));
+    }
+  });
+
+  // users tasks collection view
+  var UsersTasksView = Backbone.View.extend({
+    initialize : function () {
+      this.listenTo(this.collection, 'add', this.addTask);
+    },
+    events : {
+
     }
   });
 
