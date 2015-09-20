@@ -17,7 +17,7 @@
 
 	usersView.render();
 
-	var usersViewDiv = $('#users-view').append(usersView.$el);
+	var usersViewDiv = $('#login').append(usersView.$el);
 
 	var appViewDiv = $('#app').append(tasksView.$el);
 
