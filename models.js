@@ -1,5 +1,53 @@
 'use strict';
 
-(function() {
+var models = (function() {
+
+  // ----------------------------------------------------------------------------
+  // Users
+  // ----------------------------------------------------------------------------
+
+  var User = Backbone.Model.extend({
+  	defaults: {
+  		username: '',
+      currentUser: false
+  	},
+    createView: function() {
+      var view = new UserView({model: this});
+      view.render();
+      $('#app').prepend(view.$el);
+    }
+  });
+
+  var Users = Backbone.Collection.extend({
+  	model: User
+  });
+
+  // ----------------------------------------------------------------------------
+  // Tasks
+  // ----------------------------------------------------------------------------
+
+  var Task = Backbone.Model.extend({
+  	defaults: {
+  		title: '',
+  		description: ''
+  	}
+  });
+
+  var Tasks = Backbone.Collection.extend({
+  	model: Task
+  });
+
+  // ----------------------------------------------------------------------------
+  // Export
+  // ----------------------------------------------------------------------------
+
+  var models = {
+    User: User,
+    Users: Users,
+    Task: Task,
+    Tasks: Tasks
+  };
+
+  return models;
 
 })();
