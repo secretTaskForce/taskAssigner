@@ -5,15 +5,15 @@
 	// Initialize
 	// ----------------------------------------------------------------------------
 
-	var tasks = new Tasks();
+	var tasks = new models.Tasks();
 
-	var tasksView = new TasksView({ collection: tasks });
+	var tasksView = new views.TasksView({ collection: tasks });
 
 	tasksView.render();
 
-	var users = new Users();
+	var users = new models.Users();
 
-	var usersView = new UsersView({ collection: users });
+	var usersView = new views.UsersView({ collection: users });
 
 	usersView.render();
 
