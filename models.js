@@ -26,9 +26,15 @@ var TaskTrackerModels = (function() {
   		title: '',
   		description: '',
       creator: '',
-      assignee: '',
+      assignee: 'Not Assigned',
       status: 'Unassigned'
-  	}
+  	},
+    changeStatus: function() {
+      this.set('status', $('#status-list').val());
+    },
+    assignTask: function() {
+      this.set('assignee', $('#assignee-list').val());
+    },
   });
 
   var Tasks = Backbone.Collection.extend({
