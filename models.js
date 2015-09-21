@@ -1,6 +1,6 @@
 'use strict';
 
-var Models = (function() {
+var TaskTrackerModels = (function() {
 
   // ----------------------------------------------------------------------------
   // Users
@@ -10,12 +10,7 @@ var Models = (function() {
   	defaults: {
   		username: '',
       currentUser: false
-  	},
-    createView: function() {
-      var view = new Views.UserView({model: this});
-      view.render();
-      $('#app').prepend(view.$el);
-    }
+  	}
   });
 
   var Users = Backbone.Collection.extend({
@@ -41,16 +36,12 @@ var Models = (function() {
   });
 
   // ----------------------------------------------------------------------------
-  // Export
+  // Module
   // ----------------------------------------------------------------------------
 
-  var Models = {
-    User: User,
+  return {
     Users: Users,
-    Task: Task,
     Tasks: Tasks
   };
-
-  return Models;
 
 })();

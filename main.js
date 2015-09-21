@@ -1,27 +1,21 @@
 'use strict';
+
+var app = {};
+
+$(function() { //when DOM is ready...
+	app.users = new TaskTrackerModels.Users([
+		{username:'David'},
+		{username:'Molly'},
+		{username:'Stephen'}
+	]);
+
+	app.tasks = new TaskTrackerModels.Tasks([
+		// test data here
+	]);
+
+	app.gui = new GUI(app.users,
+		app.tasks,
+		'#app');// selector of main div
+});
+
 (function() {
-
-	// ----------------------------------------------------------------------------
-	// Initialize
-	// ----------------------------------------------------------------------------
-
-	var tasks = new Models.Tasks();
-
-	var tasksView = new Views.TasksView({ collection: tasks });
-
-	tasksView.render();
-
-	var users = new Models.Users();
-
-	var usersView = new Views.UsersView({ collection: users });
-
-	usersView.render();
-
-	var usersViewDiv = $('#login').append(usersView.$el);
-
-	var appViewDiv = $('#app').append(tasksView.$el);
-
-	appViewDiv.hide();
-
-
-})();

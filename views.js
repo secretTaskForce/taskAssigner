@@ -1,81 +1,6 @@
 'use strict';
 
-var Views = (function() {
-
-  // ----------------------------------------------------------------------------
-  // Users
-  // ----------------------------------------------------------------------------
-
-  // single user view
-  var UserView = Backbone.View.extend({
-    render: function() {
-      var username = '<h2>' + this.model.get('username') + '</h2>';
-      var logout = '<button id="logout">Logout</button>';
-      this.$el.html(username + logout);
-    },
-    initialize: function() {
-      this.model.on('change', this.render, this);
-    },
-    events: {
-      'click #logout': 'logout'
-    },
-    logout: function() {
-      this.model.set('currentUser', false);
-      this.remove();
-      $('#app').hide();
-      $('#login').show();
-    }
-  });
-
-  // users collection view
-  var UsersView = Backbone.View.extend({ // will be login/create user
-    render: function() {
-      var userHeader = '<h4>Create User</h4>';
-      var username = 'Username: <input type="text" id="username-input">';
-      var submit = '<button id="add-user">Add User</button>';
-      var selectHeader = '<h4>Or Select User</h4>';
-      var users = '<select id="user-select"><option>Select User</option>';
-  		this.collection.each(function(model) { // not exact needs improvement, how to connect to users
-  			var option = '<option>' + model.get('username') + '</option>';
-        users += option;
-  		});
-      users += '</select>';
-      this.$el.html(userHeader + username + submit + selectHeader + users);
-    },
-    initialize : function () {
-      this.listenTo(this.collection, 'add', this.addUser);
-      this.collection.on('change', this.login, this);
-    },
-    events : {
-      'click #add-user': 'addModel',
-      'change #user-select': 'selectUser'
-    },
-    addModel : function () {
-      if ($('#username-input').val() !== '') {
-        this.collection.add({});
-      } else {
-        return console.log('No Username Provided');
-      }
-    },
-    addUser : function (newModel) {
-      var nameOfUser = $('#username-input').val();
-      newModel.set('username', nameOfUser);
-      newModel.set('currentUser', true);
-      var view = new UserView({ model: newModel });
-      view.render();
-      $('#app').prepend(view.$el);
-    },
-    selectUser: function() {
-      var selectedUser = this.collection.where({ 'username': $('#user-select').val() })[0];
-      selectedUser.set('currentUser', true);
-      selectedUser.createView();
-    },
-    login: function() {
-      this.render();
-      $('#login').hide();
-      $('#app').show();
-    }
-  });
+var GUI = (function() {
 
   // ----------------------------------------------------------------------------
   // Tasks
@@ -84,29 +9,29 @@ var Views = (function() {
   // single task view
   var TaskView = Backbone.View.extend({
     render: function() {
-  		var title = '<h2 class="title">' + this.model.get('title') + '</h2>';
-  		var description = '<p class="description">' + this.model.get('description') + '</p>';
-  		var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
-  		var assignee = '<h5 class="assignee">' + this.model.get('assignee') + '</h5>';
-  		var status = '<h5 class="status">' + this.model.get('status') + '</h5>';
-  		this.$el.html(title + description);
-  	},
+      var title = '<h2 class="title">' + this.model.get('title') + '</h2>';
+      var description = '<p class="description">' + this.model.get('description') + '</p>';
+      var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
+      var assignee = '<h5 class="assignee">' + this.model.get('assignee') + '</h5>'; // needs to be dropdown
+      var status = '<h5 class="status">' + this.model.get('status') + '</h5>'; // needs to be dropdown
+      this.$el.html(title + description);
+    },
     initialize: function () {
       this.model.on('change', this.render, this);
     }
   });
 
   // tasks collection view
-  var TasksView = Backbone.View.extend({
+  var CreateTaskView = Backbone.View.extend({ // was tasks view
     render: function() {
-      var header = '<h2>Unassigned Tasks</h2>'
+      var header = '<h2>Create Task</h2>'
       var title = 'Title: <input type="text" id="title-input">';
       var description = 'Description: <input type="text" id="description-input">';
       var submit = '<button id="add-task">Add Task</button>';
       this.$el.html(header + title + description + submit);
     },
     initialize : function () {
-      this.listenTo(this.collection, 'add', this.addTask);
+      // what would go here?
     },
     events : {
       'click #add-task': 'addModel'
@@ -117,63 +42,76 @@ var Views = (function() {
       } else {
         return console.log('Fields cannot be blank');
       }
-    },
-    addTask : function (newModel) {
-      var taskTitle = $('#title-input').val();
-      var taskDescription = $('#description-input').val();
-      newModel.set('title', taskTitle);
-      newModel.set('description', taskDescription);
-      var view = new TaskView({ model: newModel });
-      view.render();
-      $('#title-input').val('');
-      $('#description-input').val('');
-      this.$el.append(view.$el);
     }
   });
 
+  // unassigned tasks collection view
   var UnassignedTasksView = Backbone.View.extend({
+    // listen to create tasks for an unassigned task and add it to the list
+    // have a button to create a createtaskview
     render: function() {
+      var newTask = '<button id="new-task">New Task</button>';
       var tasks = this.collection.where('status', 'unassigned');
       var views = []
       tasks.each(function(model) {
         views.push(new TaskView({ model: model}));
         this.$el.append(new TaskView({ model: model}));
       });
-      this.$el.append(view.$el);
+      this.$el.append(newTask);
+    },
+    initialize : function () {
+      this.on('change', this.render, this);
+      this.collection.on('change', this.render, this); // will this work?
     },
     events : {
       'change #assignee-list': 'assignTask',
       'change #status-list': 'changeStatus',
+      'click #new-task': 'newTask'
     },
     assignTask: function() {
       this.model.set('assignee', $('#assignee-list').val());
     },
     changeStatus: function() {
-      this.model.set('assignee', $('#status-list').val()));
+      this.model.set('status', $('#status-list').val());
+    },
+    newTask: function() {
+      var createTask = new CreateTaskView();
+      createTask.render();
+      this.$el.append(createTask.$el);
     }
   });
 
   // users tasks collection view
   var UsersTasksView = Backbone.View.extend({
-    initialize : function () {
-      this.listenTo(this.collection, 'add', this.addTask);
-    },
-    events : {
 
-    }
   });
 
   // ----------------------------------------------------------------------------
-  // Export
+  // Users
   // ----------------------------------------------------------------------------
 
-  var Views = {
-    UserView: UserView,
-    UsersView: UsersView,
-    TaskView: TaskView,
-    TasksView: TasksView
-  };
+  // single user view
+  var UserView = Backbone.View.extend({
 
-  return Views;
+  });
+
+  // users collection view
+  var LoginView = Backbone.View.extend({ // was users view
+
+  });
+
+  // ----------------------------------------------------------------------------
+  // Constructor
+  // ----------------------------------------------------------------------------
+
+  function GUI(users,tasks,el) {
+  	// users is collection of User models
+  	// tasks is collection of Task models
+  	// el is selector for where GUI connects in DOM
+
+  	//...
+  }
+
+  return GUI;
 
 })();
