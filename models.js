@@ -29,7 +29,10 @@ var Models = (function() {
   var Task = Backbone.Model.extend({
   	defaults: {
   		title: '',
-  		description: ''
+  		description: '',
+      creator: '',
+      assignee: '',
+      status: 'Unassigned'
   	}
   });
 
