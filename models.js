@@ -34,7 +34,7 @@ var TaskTrackerModels = (function() {
     },
     assignTask: function() {
       this.set('assignee', $('#assignee-list').val());
-    },
+    }
   });
 
   var Tasks = Backbone.Collection.extend({

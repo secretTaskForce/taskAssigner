@@ -57,18 +57,20 @@ var GUI = (function() {
       'click #add-task': 'addModel'
     },
     addModel : function () {
-      if ($('#title-input').val() !== '' && $('#description-input').val() !== '') {
-        this.collection.add({});
-      } else {
-        return console.log('Fields cannot be blank');
-      }
+
+      // if ($('#title-input').val() !== '' && $('#description-input').val() !== '') {
+        this.collection.add({ creator: userSession });
+        console.log(this);
+      // } else {
+        // return console.log('Fields cannot be blank');
+      // }
     },
     addTask : function (newModel) {
       newModel.set('title', $('#title-input').val());
       newModel.set('description', $('#description-input').val());
       newModel.set('creator', userSession);
       this.remove();
-    },
+    }
   });
 
   // unassigned tasks collection view
@@ -77,13 +79,13 @@ var GUI = (function() {
       var header = '<h2>Unassigned Tasks</h2>';
       var newTask = '<button id="new-task">New Task</button>';
       if (this.collection.where('status', 'Unassigned')) {
-        var unassignedTasks = this.collection.where('status', 'Unassigned');
-        for (var i = 0; i < unassignedTasks.length; i++) {
-          var model = unassignedTasks[i];
+        var unassignedTasks = this.collection.where({status: 'Unassigned'});
+        console.log(unassignedTasks);
+        unassignedTasks.each(function(model) {
           var taskView = new TaskView({ model: model });
           taskView.render();
           this.$el.append(taskView.$el);
-        }
+        }, this);
       }
       this.$el.prepend(header + newTask);
     },
@@ -92,7 +94,6 @@ var GUI = (function() {
     },
     initialize : function () {
       this.on('change', this.render, this);
-      this.collection.on('change', this.render, this); // will this work?
     },
     newTask: function() {
       var createTask = new CreateTaskView({ collection: app.tasks });

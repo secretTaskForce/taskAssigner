@@ -10,27 +10,27 @@ $(function() { //when DOM is ready...
 	]);
 
 	app.tasks = new TaskTrackerModels.Tasks([
-		// {
-		// 	title: 'Bathroom',
-		// 	description: 'Clean Bathroom',
-		// 	creator: 'David',
-		// 	status: 'Unassigned',
-		// 	assignee: 'Not Assigned'
-		// },
-		// {
-		// 	title: 'Floors',
-		// 	description: 'Clean Floors',
-		// 	creator: 'David',
-		// 	status: 'Unassigned',
-		// 	assignee: 'Not Assigned'
-		// },
-		// {
-		// 	title: 'Kitchen',
-		// 	description: 'Clean Kitchen',
-		// 	creator: 'David',
-		// 	status: 'Unassigned',
-		// 	assignee: 'Not Assigned'
-		// },
+		{
+			title: 'Bathroom',
+			description: 'Clean Bathroom',
+			creator: 'David',
+			status: 'Unassigned',
+			assignee: 'Not Assigned'
+		},
+		{
+			title: 'Floors',
+			description: 'Clean Floors',
+			creator: 'David',
+			status: 'Unassigned',
+			assignee: 'Not Assigned'
+		},
+		{
+			title: 'Kitchen',
+			description: 'Clean Kitchen',
+			creator: 'David',
+			status: 'Unassigned',
+			assignee: 'Not Assigned'
+		},
 	]);
 
 	app.gui = new GUI(app.users, app.tasks, '#app');
