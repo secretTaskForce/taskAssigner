@@ -60,7 +60,6 @@ var GUI = (function() {
 
       // if ($('#title-input').val() !== '' && $('#description-input').val() !== '') {
         this.collection.add({ creator: userSession });
-        console.log(this);
       // } else {
         // return console.log('Fields cannot be blank');
       // }
@@ -79,12 +78,19 @@ var GUI = (function() {
       var header = '<h2>Unassigned Tasks</h2>';
       var newTask = '<button id="new-task">New Task</button>';
       if (this.collection.where('status', 'Unassigned')) {
-        var unassignedTasks = this.collection.where({status: 'Unassigned'});
-        console.log(unassignedTasks);
-        unassignedTasks.each(function(model) {
-          var taskView = new TaskView({ model: model });
-          taskView.render();
-          this.$el.append(taskView.$el);
+        // var unassignedTasks = this.collection.where({status: 'Unassigned'});
+        // console.log(unassignedTasks);
+        // unassignedTasks.each(function(model) {
+        //   var taskView = new TaskView({ model: model });
+        //   taskView.render();
+        //   this.$el.append(taskView.$el);
+        // }, this);
+        this.collection.each(function(task) {
+          if (task.get('status') === 'Unassigned') {
+            var taskView = new TaskView({ model: task });
+            taskView.render();
+            this.$el.append(taskView.$el);
+          }
         }, this);
       }
       this.$el.prepend(header + newTask);
@@ -93,7 +99,7 @@ var GUI = (function() {
       'click #new-task': 'newTask'
     },
     initialize : function () {
-      this.on('change', this.render, this);
+      this.collection.on('change', this.render, this);
     },
     newTask: function() {
       var createTask = new CreateTaskView({ collection: app.tasks });
@@ -107,14 +113,29 @@ var GUI = (function() {
     render: function() {
       var header = '<h2>Users Tasks</h2>';
       var userTaskExists = this.collection.where('creator', userSession) || this.collection.where('assignee', userSession);
+      console.log(userTaskExists);
       if (userTaskExists) {
-        var userTasks = this.collection.where('creator', userSession) + this.collection.where('assignee', userSession);
-        for (var i = 0; i < userTasks.length; i++) {
-          var model = userTasks[i];
-          var taskView = new TaskView({ model: model });
-          taskView.render();
-          this.$el.append(taskView.$el);
-        }
+        // var userTasks = this.collection.where('creator', userSession) + this.collection.where('assignee', userSession);
+        // for (var i = 0; i < userTasks.length; i++) {
+        //   var model = userTasks[i];
+        //   var taskView = new TaskView({ model: model });
+        //   taskView.render();
+        //   this.$el.append(taskView.$el);
+        // }
+        this.collection.each(function(task) {
+          if (task.get('creator') === userSession) {
+            var taskView = new TaskView({ model: task });
+            console.log(taskView);
+            taskView.render();
+            this.$el.append(taskView.$el);
+          }
+          if (task.get('assignee') === userSession) {
+            var taskView = new TaskView({ model: task });
+            console.log(taskView);
+            taskView.render();
+            this.$el.append(taskView.$el);
+          }
+        }, this);
       }
       this.$el.prepend(header);
     },
