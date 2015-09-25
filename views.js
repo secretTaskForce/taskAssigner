@@ -12,19 +12,29 @@ var GUI = (function() {
   // single task view
   var TaskView = Backbone.View.extend({
     render: function() {
-      var title = '<h2 class="title">' + this.model.get('title') + '</h2>';
+      var title = '<h3 class="title">' + this.model.get('title') + '</h3>';
+
       var description = '<p class="description">' + this.model.get('description') + '</p>';
-      // var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
-      // var assignee = '<select id="assignee-list"><option>Not Assigned</option>';
-      // app.users.each(function(model) { // will this work using just users?
-      //   var option = '<option>' + model.get('username') + '</option>';
-      //   assignee += option;
-      // });
-      // assignee += '</select>';
-      // assignee.val(this.model.get('assignee')); // this props wont work on a string, so figure it out
-      // var status = '<select id="status-list"><option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option></select>';
-      // status.val(this.model.get('status')) // this props wont work on a string, so figure it out
-      this.$el.html(title + description);
+
+      
+      var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
+      
+      var assignee = '<select id="assignee-list"><option>Not Assigned</option>';
+      app.users.each(function(model) { // will this work using just users?
+        var option = '<option>' + model.get('username') + '</option>';
+        assignee += option;
+      });
+      assignee += '</select>';
+      // var assigneeValue = $("#assignee-list").val();
+      // console.log(assigneeValue);
+      assignee.val(this.model.get(assignee)); // this props wont work on a string, so figure it out
+      console.log(assignee);
+
+      var status = '<select id="status-list"><option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option></select>';
+      // status.val(this.model.get('status')); // this props wont work on a string, so figure it out
+
+
+      this.$el.html('Title:' + title + 'Description: ' + description + 'Assignee: ' + assignee + 'Status: ' + status);
     },
     initialize: function () {
       this.model.on('change', this.render, this);
