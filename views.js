@@ -13,41 +13,38 @@ var GUI = (function() {
   var TaskView = Backbone.View.extend({
     render: function() {
       var title = '<h3 class="title">' + this.model.get('title') + '</h3>';
-
       var description = '<p class="description">' + this.model.get('description') + '</p>';
+      var creator = '<h5 class="creator">Creator: ' + this.model.get('creator') + '</h5>';
 
-      
-      var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
-      
-      var assignee = '<select id="assignee-list"><option>Not Assigned</option>';
+      var assigneeList = $('<select class="assignee-list"></select>');
+      var options = '<option>Not Assigned</option>';
       app.users.each(function(model) { // will this work using just users?
         var option = '<option>' + model.get('username') + '</option>';
-        assignee += option;
-      });
-      assignee += '</select>';
-      // var assigneeValue = $("#assignee-list").val();
-      // console.log(assigneeValue);
-      assignee.val(this.model.get(assignee)); // this props wont work on a string, so figure it out
-      console.log(assignee);
+        options += option;
+      }, this);
+      assigneeList.html(options);
+      assigneeList.val(this.model.get('assignee'));
 
-      var status = '<select id="status-list"><option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option></select>';
-      // status.val(this.model.get('status')); // this props wont work on a string, so figure it out
+      var statusList = $('<select class="status-list"></select>');
+      statusList.html('<option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option>');
+      statusList.val(this.model.get('status'));
 
-
-      this.$el.html('Title:' + title + 'Description: ' + description + 'Assignee: ' + assignee + 'Status: ' + status);
-    },
-    initialize: function () {
-      // this.model.on('change', this.render, this);
+      this.$el.html(title + description + creator);
+      this.$el.append('<h5>Assign Task</h5>');
+      this.$el.append(assigneeList);
+      this.$el.append('<h5>Set Status</h5>');
+      this.$el.append(statusList);
     },
     events : { // how to connect to individual task view
-      'change #assignee-list': 'assignTask',
-      'click #status-list': 'changeStatus'
+      'change .assignee-list': 'assignTask',
+      'change .status-list': 'changeStatus'
     },
-    assignTask: function() {
-      this.model.assignTask();
+    assignTask: function(event) {
+      this.model.set('assignee', $(event.currentTarget).val());
+      this.model.set('status', 'Assigned');
     },
-    changeStatus: function() {
-      this.model.changeStatus();
+    changeStatus: function(event) {
+      this.model.set('status', $(event.currentTarget).val());
     },
   });
 
