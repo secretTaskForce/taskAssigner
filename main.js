@@ -1,27 +1,37 @@
 'use strict';
-(function() {
 
-	// ----------------------------------------------------------------------------
-	// Initialize
-	// ----------------------------------------------------------------------------
+var app = {};
 
-	var tasks = new Models.Tasks();
+$(function() { //when DOM is ready...
+	app.users = new TaskTrackerModels.Users([
+		{username: 'David'},
+		{username: 'Molly'},
+		{username: 'Stephen'},
+	]);
 
-	var tasksView = new Views.TasksView({ collection: tasks });
+	app.tasks = new TaskTrackerModels.Tasks([
+		// {
+		// 	title: 'Bathroom',
+		// 	description: 'Clean Bathroom',
+		// 	creator: 'David',
+		// 	status: 'Unassigned',
+		// 	assignee: 'Not Assigned'
+		// },
+		// {
+		// 	title: 'Floors',
+		// 	description: 'Clean Floors',
+		// 	creator: 'David',
+		// 	status: 'Unassigned',
+		// 	assignee: 'Not Assigned'
+		// },
+		// {
+		// 	title: 'Kitchen',
+		// 	description: 'Clean Kitchen',
+		// 	creator: 'David',
+		// 	status: 'Unassigned',
+		// 	assignee: 'Not Assigned'
+		// },
+	]);
 
-	tasksView.render();
-
-	var users = new Models.Users();
-
-	var usersView = new Views.UsersView({ collection: users });
-
-	usersView.render();
-
-	var usersViewDiv = $('#login').append(usersView.$el);
-
-	var appViewDiv = $('#app').append(tasksView.$el);
-
-	appViewDiv.hide();
-
-
-})();
+	app.gui = new GUI(app.users, app.tasks, '#app');
+});
