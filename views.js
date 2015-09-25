@@ -14,7 +14,7 @@ var GUI = (function() {
     render: function() {
       var title = '<h2 class="title">' + this.model.get('title') + '</h2>';
       var description = '<p class="description">' + this.model.get('description') + '</p>';
-      // var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
+      var creator = '<h5 class="creator">' + this.model.get('creator') + '</h5>';
       // var assignee = '<select id="assignee-list"><option>Not Assigned</option>';
       // app.users.each(function(model) { // will this work using just users?
       //   var option = '<option>' + model.get('username') + '</option>';
@@ -24,10 +24,10 @@ var GUI = (function() {
       // assignee.val(this.model.get('assignee')); // this props wont work on a string, so figure it out
       // var status = '<select id="status-list"><option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option></select>';
       // status.val(this.model.get('status')) // this props wont work on a string, so figure it out
-      this.$el.html(title + description);
+      this.$el.html(title + description + creator);
     },
     initialize: function () {
-      this.model.on('change', this.render, this);
+      // this.model.on('change', this.render, this);
     },
     events : { // how to connect to individual task view
       'change #assignee-list': 'assignTask',
@@ -50,25 +50,18 @@ var GUI = (function() {
       var submit = '<button id="add-task">Add Task</button>';
       this.$el.html(header + title + description + submit);
     },
-    initialize : function () {
-      this.listenTo(this.collection, 'add', this.addTask);
-    },
     events : {
       'click #add-task': 'addModel'
     },
     addModel : function () {
 
       // if ($('#title-input').val() !== '' && $('#description-input').val() !== '') {
-        this.collection.add({ creator: userSession });
+        this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
+        console.log(this.collection);
+        this.remove();
       // } else {
         // return console.log('Fields cannot be blank');
       // }
-    },
-    addTask : function (newModel) {
-      newModel.set('title', $('#title-input').val());
-      newModel.set('description', $('#description-input').val());
-      newModel.set('creator', userSession);
-      this.remove();
     }
   });
 
@@ -77,14 +70,8 @@ var GUI = (function() {
     render: function() {
       var header = '<h2>Unassigned Tasks</h2>';
       var newTask = '<button id="new-task">New Task</button>';
+      this.$el.html(header + newTask);
       if (this.collection.where('status', 'Unassigned')) {
-        // var unassignedTasks = this.collection.where({status: 'Unassigned'});
-        // console.log(unassignedTasks);
-        // unassignedTasks.each(function(model) {
-        //   var taskView = new TaskView({ model: model });
-        //   taskView.render();
-        //   this.$el.append(taskView.$el);
-        // }, this);
         this.collection.each(function(task) {
           if (task.get('status') === 'Unassigned') {
             var taskView = new TaskView({ model: task });
@@ -93,18 +80,22 @@ var GUI = (function() {
           }
         }, this);
       }
-      this.$el.prepend(header + newTask);
     },
     events: {
       'click #new-task': 'newTask'
     },
     initialize : function () {
+      this.collection.on('add', this.render, this);
       this.collection.on('change', this.render, this);
+      // this.listenTo(this.collection, 'change', this.render);
+      // console.log('hers this');
+      // console.log(this);
+      // this.collection.on('change', this.render, this);
     },
     newTask: function() {
       var createTask = new CreateTaskView({ collection: app.tasks });
       createTask.render();
-      this.$el.append(createTask.$el);
+      this.$el.prepend(createTask.$el);
     }
   });
 
@@ -112,16 +103,9 @@ var GUI = (function() {
   var UsersTasksView = Backbone.View.extend({
     render: function() {
       var header = '<h2>Users Tasks</h2>';
+      this.$el.html(header);
       var userTaskExists = this.collection.where('creator', userSession) || this.collection.where('assignee', userSession);
-      console.log(userTaskExists);
       if (userTaskExists) {
-        // var userTasks = this.collection.where('creator', userSession) + this.collection.where('assignee', userSession);
-        // for (var i = 0; i < userTasks.length; i++) {
-        //   var model = userTasks[i];
-        //   var taskView = new TaskView({ model: model });
-        //   taskView.render();
-        //   this.$el.append(taskView.$el);
-        // }
         this.collection.each(function(task) {
           if (task.get('creator') === userSession) {
             var taskView = new TaskView({ model: task });
@@ -137,11 +121,10 @@ var GUI = (function() {
           }
         }, this);
       }
-      this.$el.prepend(header);
     },
     initialize : function () {
-      this.on('change', this.render, this);
-      this.collection.on('change', this.render, this); // will this work?
+      this.collection.on('add', this.render, this);
+      this.collection.on('change', this.render, this);
     }
   });
 
@@ -163,7 +146,7 @@ var GUI = (function() {
       this.$el.append(usersTasks.$el);
     },
     initialize: function() {
-      this.model.on('change', this.render, this);
+      // this.listenTo(this.model, 'change', this.render);
     },
     events: {
       'click #logout': 'logout'
