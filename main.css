@@ -49,8 +49,12 @@ button.logout {
 
 
 
-/* Errors */
+/* Alerts */
 
 .error {
   color: gold;
+}
+
+.success {
+  color: green;
 }
