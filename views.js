@@ -60,8 +60,8 @@ var GUI = (function() {
     render: function() {
       var error = '<p class="error"></p>'
       var header = '<h2>Create Task</h2>'
-      var title = 'Title: <input type="text" id="title-input">';
-      var description = 'Description: <input type="text" id="description-input">';
+      var title = 'Title <input type="text" id="title-input">';
+      var description = 'Description <textarea id="description-input"></textarea>';
       var submit = '<button id="add-task">Add Task</button>';
       this.$el.html(header + error + title + description + submit);
     },
@@ -178,7 +178,7 @@ var GUI = (function() {
       var error = '<p class="error"></p>'
       var loginHeader = '<h2>Log In</h2>';
       var userHeader = '<h4>Create User</h4>';
-      var username = 'Username: <input type="text" id="username-input">';
+      var username = 'Username <input type="text" id="username-input">';
       var submit = '<button id="add-user">Add User</button>';
       var selectHeader = '<h4>Or Select User</h4>';
       var users = '<select id="user-select"><option>Select User</option>';

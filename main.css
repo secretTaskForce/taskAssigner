@@ -15,6 +15,7 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
 
 h1 {
@@ -27,6 +28,11 @@ h1 {
 
 body {
   color: white;
+}
+
+input, textarea {
+  display: block;
+  margin-bottom: 10px;
 }
 
 /* Application Styles */
