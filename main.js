@@ -13,28 +13,28 @@ $(function() { //when DOM is ready...
 		{
 			title: 'Insurrection',
 			description: 'Start an insurrection',
-			creator: 'David',
+			creator: 'Shadow Dragon',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
 			title: 'Specific strike',
 			description: 'Strike fear into the hearts of enemys',
-			creator: 'Molly',
+			creator: 'Dash',
 			status: 'Assigned',
 			assignee: 'Stephen'
 		},
 		{
 			title: 'General Strike',
 			description: 'Facilitate a general strike',
-			creator: 'Molly',
+			creator: 'Dash',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
 			title: 'Abolish Capitalism',
 			description: 'Also abolish the state',
-			creator: 'Stephen',
+			creator: 'Green Lantern',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
