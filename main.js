@@ -4,9 +4,9 @@ var app = {};
 
 $(function() { //when DOM is ready...
 	app.users = new TaskTrackerModels.Users([
-		{username: 'David'},
-		{username: 'Molly'},
-		{username: 'Stephen'},
+		{username: 'Shadow Dragon'},
+		{username: 'Dash'},
+		{username: 'Green Lantern'},
 	]);
 
 	app.tasks= new TaskTrackerModels.Tasks([
