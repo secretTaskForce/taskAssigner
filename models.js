@@ -10,11 +10,6 @@ var TaskTrackerModels = (function() {
   	defaults: {
   		username: '',
       currentUser: false
-  	},
-    validate: function(attrs, options) {
-      if (!attrs.username) {
-        return 'Username must be present';
-      }
     }
   });
 
@@ -33,12 +28,7 @@ var TaskTrackerModels = (function() {
       creator: '',
       assignee: 'Not Assigned',
       status: 'Unassigned'
-  	},
-    validate: function(attrs, options) {
-      if (!attrs.title || !attrs.description) {
-        return 'Fields cannot be blank';
-      }
-    }
+  	}
   });
 
   var Tasks = Backbone.Collection.extend({
