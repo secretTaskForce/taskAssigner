@@ -53,19 +53,24 @@ var GUI = (function() {
   // create tasks view - form for adding new tasks
   var CreateTaskView = Backbone.View.extend({
     render: function() {
+      var error = '<p class="error"></p>'
       var header = '<h2>Create Task</h2>'
       var title = 'Title: <input type="text" id="title-input">';
       var description = 'Description: <input type="text" id="description-input">';
       var submit = '<button id="add-task">Add Task</button>';
-      this.$el.html(header + title + description + submit);
+      this.$el.html(header + error + title + description + submit);
     },
     events : {
       'click #add-task': 'addModel'
     },
     addModel : function () {
-      this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
-      console.log(this.collection);
-      this.remove();
+      if ($('#title-input').val() && $('#description-input').val()) {
+        this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
+        this.remove();
+      } else {
+        $('.error').html('Fields cannot be blank')
+      }
+
     }
   });
 
@@ -165,6 +170,7 @@ var GUI = (function() {
   // users collection view
   var LoginView = Backbone.View.extend({ // was users view
     render: function() {
+      var error = '<p class="error"></p>'
       var loginHeader = '<h2>Log In</h2>';
       var userHeader = '<h4>Create User</h4>';
       var username = 'Username: <input type="text" id="username-input">';
@@ -178,7 +184,7 @@ var GUI = (function() {
         users += option;
       });
       users += '</select>';
-      this.$el.html(loginHeader + userHeader + username + submit + selectHeader + users);
+      this.$el.html(loginHeader + error + userHeader + username + submit + selectHeader + users);
     },
     initialize : function () {
       this.listenTo(this.collection, 'add', this.addUser);
@@ -188,7 +194,11 @@ var GUI = (function() {
       'change #user-select': 'selectUser'
     },
     addModel : function () {
-      this.collection.add({});
+      if ($('#username-input').val() !== '') {
+        this.collection.add({});
+      } else {
+        $('.error').html('Username cannot be blank');
+      }
     },
     addUser : function (newModel) {
       var nameOfUser = $('#username-input').val();
