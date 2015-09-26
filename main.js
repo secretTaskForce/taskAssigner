@@ -14,7 +14,7 @@ $(function() { //when DOM is ready...
 			title: 'Insurrection',
 			description: 'Start an insurrection',
 			creator: 'David',
-			status: 'Assigned',
+			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
@@ -28,7 +28,7 @@ $(function() { //when DOM is ready...
 			title: 'General Strike',
 			description: 'Facilitate a general strike',
 			creator: 'Molly',
-			status: 'Assigned',
+			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
