@@ -36,10 +36,15 @@ div {
 }
 
 div div {
-  border: none;
   background-color: #555;
 }
 
 div div div {
   background-color: #222;
+}
+
+/* Errors */
+
+.error {
+  color: #8b0000;
 }
