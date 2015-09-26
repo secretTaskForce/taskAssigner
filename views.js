@@ -126,9 +126,7 @@ var GUI = (function() {
   var UsersTasksView = Backbone.View.extend({
     render: function() {
       var header = '<h2>'+ userSession + '\'s Tasks</h2>';
-      var successMessage = $('<p class="success"></p>');
       this.$el.html(header);
-      this.$el.append(successMessage);
 
       // loop through users tasks
       this.collection.each(function(task) {
@@ -137,9 +135,6 @@ var GUI = (function() {
           console.log(taskView);
           taskView.render();
           this.$el.append(taskView.$el);
-          $('.success').html('');
-        } else {
-          $('.success').html('All tasks completed - One step closer to world liberation');
         }
       }, this);
     },
