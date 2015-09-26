@@ -37,7 +37,7 @@ $(function() { //when DOM is ready...
 			creator: 'Green Lantern',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
-		},
+		}
 	]);
 
 	app.gui = new GUI(app.users, app.tasks, '#app');
