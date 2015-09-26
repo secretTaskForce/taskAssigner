@@ -114,7 +114,7 @@ var GUI = (function() {
   // users tasks collection view
   var UsersTasksView = Backbone.View.extend({
     render: function() {
-      var header = '<h2>Users Tasks</h2>';
+      var header = '<h2>'+ userSession + '\'s Tasks</h2>';
       this.$el.html(header);
       var userTaskExists = this.collection.where('creator', userSession) || this.collection.where('assignee', userSession);
 
@@ -149,8 +149,8 @@ var GUI = (function() {
   // user view - signed in user page
   var UserView = Backbone.View.extend({
     render: function() {
-      var username = '<h2 class="text">' + this.model.get('username') + '</h2>';
-      var logout = '<button id="logout">Logout</button>';
+      var username = '<h2 class="logout" id="username">' + this.model.get('username') + '</h2>';
+      var logout = '<button class="logout" id="button">Logout</button>';
       var unassignedTasks = new UnassignedTasksView({ collection: app.tasks });
       var usersTasks = new UsersTasksView({ collection: app.tasks });
       unassignedTasks.render();
