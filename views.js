@@ -137,6 +137,7 @@ var GUI = (function() {
           console.log(taskView);
           taskView.render();
           this.$el.append(taskView.$el);
+          $('.success').html('');
         } else {
           $('.success').html('All tasks completed - One step closer to world liberation');
         }
