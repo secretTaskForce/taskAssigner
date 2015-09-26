@@ -111,7 +111,7 @@ var GUI = (function() {
     }
   });
 
-  // users tasks collection view (creator)
+  // users tasks collection view 
   var UsersTasksView = Backbone.View.extend({
     render: function() {
       var header = '<h2>'+ userSession + '\'s Tasks</h2>';
