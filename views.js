@@ -16,6 +16,7 @@ var GUI = (function() {
       var description = '<p class="description">' + this.model.get('description') + '</p>';
       var creator = '<h5 class="creator">Creator: ' + this.model.get('creator') + '</h5>';
 
+      // assignee drop down
       var assigneeList = $('<select class="assignee-list"></select>');
       var options = '<option>Not Assigned</option>';
       app.users.each(function(model) { // will this work using just users?
@@ -25,6 +26,7 @@ var GUI = (function() {
       assigneeList.html(options);
       assigneeList.val(this.model.get('assignee'));
 
+      // status drop down
       var statusList = $('<select class="status-list"></select>');
       statusList.html('<option>Unassigned</option><option>Assigned</option><option>In Progress</option><option>Done</option>');
       statusList.val(this.model.get('status'));
@@ -35,7 +37,7 @@ var GUI = (function() {
       this.$el.append('<h5>Set Status</h5>');
       this.$el.append(statusList);
     },
-    events : { // how to connect to individual task view
+    events : {
       'change .assignee-list': 'assignTask',
       'change .status-list': 'changeStatus'
     },
@@ -48,8 +50,8 @@ var GUI = (function() {
     },
   });
 
-  // tasks collection view
-  var CreateTaskView = Backbone.View.extend({ // was tasks view
+  // create tasks view - form for adding new tasks
+  var CreateTaskView = Backbone.View.extend({
     render: function() {
       var header = '<h2>Create Task</h2>'
       var title = 'Title: <input type="text" id="title-input">';
@@ -61,14 +63,9 @@ var GUI = (function() {
       'click #add-task': 'addModel'
     },
     addModel : function () {
-
-      // if ($('#title-input').val() !== '' && $('#description-input').val() !== '') {
-        this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
-        console.log(this.collection);
-        this.remove();
-      // } else {
-        // return console.log('Fields cannot be blank');
-      // }
+      this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
+      console.log(this.collection);
+      this.remove();
     }
   });
 
@@ -78,6 +75,8 @@ var GUI = (function() {
       var header = '<h2>Unassigned Tasks</h2>';
       var newTask = '<button id="new-task">New Task</button>';
       this.$el.html(header + newTask);
+
+      // loop through unassigned tasks
       if (this.collection.where('status', 'Unassigned')) {
         this.collection.each(function(task) {
           if (task.get('status') === 'Unassigned') {
@@ -94,10 +93,6 @@ var GUI = (function() {
     initialize : function () {
       this.collection.on('add', this.render, this);
       this.collection.on('change', this.render, this);
-      // this.listenTo(this.collection, 'change', this.render);
-      // console.log('hers this');
-      // console.log(this);
-      // this.collection.on('change', this.render, this);
     },
     newTask: function() {
       var createTask = new CreateTaskView({ collection: app.tasks });
@@ -112,6 +107,8 @@ var GUI = (function() {
       var header = '<h2>Users Tasks</h2>';
       this.$el.html(header);
       var userTaskExists = this.collection.where('creator', userSession) || this.collection.where('assignee', userSession);
+
+      // loop through users tasks
       if (userTaskExists) {
         this.collection.each(function(task) {
           if (task.get('creator') === userSession) {
@@ -139,7 +136,7 @@ var GUI = (function() {
   // Users
   // ----------------------------------------------------------------------------
 
-  // single user view
+  // user view - signed in user page
   var UserView = Backbone.View.extend({
     render: function() {
       var username = '<h2>' + this.model.get('username') + '</h2>';
@@ -151,9 +148,6 @@ var GUI = (function() {
       this.$el.append(username + logout);
       this.$el.append(unassignedTasks.$el);
       this.$el.append(usersTasks.$el);
-    },
-    initialize: function() {
-      // this.listenTo(this.model, 'change', this.render);
     },
     events: {
       'click #logout': 'logout'
@@ -171,17 +165,20 @@ var GUI = (function() {
   // users collection view
   var LoginView = Backbone.View.extend({ // was users view
     render: function() {
+      var loginHeader = '<h2>Log In</h2>';
       var userHeader = '<h4>Create User</h4>';
       var username = 'Username: <input type="text" id="username-input">';
       var submit = '<button id="add-user">Add User</button>';
       var selectHeader = '<h4>Or Select User</h4>';
       var users = '<select id="user-select"><option>Select User</option>';
+
+      // loop through users and add add as options to select tag
       this.collection.each(function(model) {
         var option = '<option>' + model.get('username') + '</option>';
         users += option;
       });
       users += '</select>';
-      this.$el.html(userHeader + username + submit + selectHeader + users);
+      this.$el.html(loginHeader + userHeader + username + submit + selectHeader + users);
     },
     initialize : function () {
       this.listenTo(this.collection, 'add', this.addUser);
@@ -191,11 +188,7 @@ var GUI = (function() {
       'change #user-select': 'selectUser'
     },
     addModel : function () {
-      if ($('#username-input').val() !== '') {
-        this.collection.add({});
-      } else {
-        return console.log('No Username Provided');
-      }
+      this.collection.add({});
     },
     addUser : function (newModel) {
       var nameOfUser = $('#username-input').val();
