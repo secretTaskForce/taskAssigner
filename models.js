@@ -14,7 +14,11 @@ var TaskTrackerModels = (function() {
   });
 
   var Users = Backbone.Collection.extend({
-  	model: User
+  	model: User,
+    url: '/users',
+    initialize: function() {
+      this.fetch();
+    }
   });
 
   // ----------------------------------------------------------------------------
@@ -32,7 +36,11 @@ var TaskTrackerModels = (function() {
   });
 
   var Tasks = Backbone.Collection.extend({
-  	model: Task
+  	model: Task,
+    url: '/tasks',
+    initialize: function() {
+      this.fetch();
+    }
   });
 
   // ----------------------------------------------------------------------------

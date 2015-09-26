@@ -196,28 +196,23 @@ var GUI = (function() {
       this.$el.html(loginHeader + error + userHeader + username + submit + selectHeader + users);
     },
     initialize : function () {
-      this.listenTo(this.collection, 'add', this.addUser);
+      this.listenTo(this.collection, 'update', this.render);
     },
     events : {
-      'click #add-user': 'addModel',
+      'click #add-user': 'addUser',
       'change #user-select': 'selectUser'
     },
-    addModel : function () {
+    addUser : function () {
       if ($('#username-input').val() !== '') {
-        this.collection.add({});
+        var userModel = this.collection.add({ username : $('#username-input').val(), currentUser : true });
+        var userView = new UserView({ model: userModel });
+        userSession = userModel.get('username');
+        userView.render();
+        $('#app').prepend(userView.$el);
+        this.remove();
       } else {
         $('.error').html('Username cannot be blank');
-      }
-    },
-    addUser : function (newModel) {
-      var nameOfUser = $('#username-input').val();
-      newModel.set('username', nameOfUser);
-      newModel.set('currentUser', true);
-      userSession = newModel.get('username');
-      var userView = new UserView({ model: newModel });
-      userView.render();
-      $('#app').prepend(userView.$el);
-      this.remove();
+      };
     },
     selectUser: function() {
       var selectedUser = this.collection.where({ 'username': $('#user-select').val() })[0];
@@ -237,8 +232,6 @@ var GUI = (function() {
   function GUI(users,tasks,el) {
 
     var loginView = new LoginView({ collection: users });
-
-    loginView.render();
 
     $('#app').append(loginView.$el);
   }

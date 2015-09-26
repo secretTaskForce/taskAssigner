@@ -12,39 +12,43 @@ app.use(express.static(__dirname));
 var database = {};
 
 database.users = [
-  {username: 'Shadow Dragon'},
-  {username: 'Dash'},
-  {username: 'Green Lantern'}
+  {username: 'Shadow Dragon', id: 0},
+  {username: 'Dash', id: 1},
+  {username: 'Green Lantern', id: 2}
 ];
 
-database.issues = [
+database.tasks = [
   {
     title: 'Insurrection',
     description: 'Start an insurrection',
     creator: 'Shadow Dragon',
     status: 'Unassigned',
-    assignee: 'Not Assigned'
+    assignee: 'Not Assigned',
+    id: 0
   },
   {
     title: 'Specific strike',
     description: 'Strike fear into the hearts of enemys',
     creator: 'Dash',
     status: 'Assigned',
-    assignee: 'Dash'
+    assignee: 'Dash',
+    id: 1
   },
   {
     title: 'General Strike',
     description: 'Facilitate a general strike',
     creator: 'Dash',
     status: 'Unassigned',
-    assignee: 'Not Assigned'
+    assignee: 'Not Assigned',
+    id: 2
   },
   {
     title: 'Abolish Capitalism',
     description: 'Also abolish the state',
     creator: 'Green Lantern',
     status: 'Unassigned',
-    assignee: 'Not Assigned'
+    assignee: 'Not Assigned',
+    id: 3
   }
 ];
 
