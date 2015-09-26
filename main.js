@@ -18,6 +18,13 @@ $(function() { //when DOM is ready...
 			assignee: 'Not Assigned'
 		},
 		{
+			title: 'Specific strike',
+			description: 'Strike fear into the hearts of enemys',
+			creator: 'Molly',
+			status: 'Assigned',
+			assignee: 'Stephen'
+		},
+		{
 			title: 'General Strike',
 			description: 'Facilitate a general strike',
 			creator: 'Molly',
