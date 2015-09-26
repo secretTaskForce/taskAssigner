@@ -37,23 +37,20 @@ input, textarea {
 
 /* Application Styles */
 
-#app {
-  margin: 0 auto;
-  width: 40%;
-}
-
 div {
-  background-color: #777;
+  background-color: #fff;
+  margin: 10px;
   padding: 10px;
-  margin: 10px 0;
+  color: #333;
 }
 
 div div {
-  background-color: #888;
+  background-color: #eee;
 }
 
 div div div {
-  background-color: #999;
+  background-color: #555;
+  color: #fff;
 }
 
 /* Errors */
