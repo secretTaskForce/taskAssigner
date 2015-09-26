@@ -14,14 +14,14 @@ $(function() { //when DOM is ready...
 			title: 'Insurrection',
 			description: 'Start an insurrection',
 			creator: 'David',
-			status: 'Unassigned',
+			status: 'Assigned',
 			assignee: 'Not Assigned'
 		},
 		{
 			title: 'General Strike',
 			description: 'Facilitate a general strike',
 			creator: 'Molly',
-			status: 'Unassigned',
+			status: 'Assigned',
 			assignee: 'Not Assigned'
 		},
 		{
