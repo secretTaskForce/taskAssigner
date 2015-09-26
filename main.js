@@ -22,7 +22,7 @@ $(function() { //when DOM is ready...
 			description: 'Strike fear into the hearts of enemys',
 			creator: 'Dash',
 			status: 'Assigned',
-			assignee: 'Stephen'
+			assignee: 'Dash'
 		},
 		{
 			title: 'General Strike',
