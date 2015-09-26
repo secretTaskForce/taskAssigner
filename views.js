@@ -149,7 +149,7 @@ var GUI = (function() {
   // user view - signed in user page
   var UserView = Backbone.View.extend({
     render: function() {
-      var username = '<h2>' + this.model.get('username') + '</h2>';
+      var username = '<h2 class="text">' + this.model.get('username') + '</h2>';
       var logout = '<button id="logout">Logout</button>';
       var unassignedTasks = new UnassignedTasksView({ collection: app.tasks });
       var usersTasks = new UsersTasksView({ collection: app.tasks });
@@ -176,11 +176,11 @@ var GUI = (function() {
   var LoginView = Backbone.View.extend({ // was users view
     render: function() {
       var error = '<p class="error"></p>'
-      var loginHeader = '<h2>Log In</h2>';
-      var userHeader = '<h4>Create User</h4>';
+      var loginHeader = '<h2 class="text">Log In</h2>';
+      var userHeader = '<h4 class="text">Create User</h4>';
       var username = 'Username <input type="text" id="username-input">';
       var submit = '<button id="add-user">Add User</button>';
-      var selectHeader = '<h4>Or Select User</h4>';
+      var selectHeader = '<h4 class="text">Or Select User</h4>';
       var users = '<select id="user-select"><option>Select User</option>';
 
       // loop through users and add add as options to select tag

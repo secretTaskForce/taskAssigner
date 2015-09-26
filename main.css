@@ -27,30 +27,23 @@ h1 {
 }
 
 body {
-  color: white;
+color: white;
 }
 
 input, textarea {
-  display: block;
-  margin-bottom: 10px;
 }
 
 /* Application Styles */
 
 div {
-  background-color: #fff;
-  margin: 10px;
-  padding: 10px;
-  color: #333;
 }
 
 div div {
-  background-color: #eee;
+
 }
 
 div div div {
-  background-color: #555;
-  color: #fff;
+
 }
 
 /* Errors */

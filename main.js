@@ -9,7 +9,7 @@ $(function() { //when DOM is ready...
 		{username: 'Stephen'},
 	]);
 
-	app.tasks = new TaskTrackerModels.Tasks([
+	app.tasks= new TaskTrackerModels.Tasks([
 		{
 			title: 'Insurrection',
 			description: 'Start an insurrection',
