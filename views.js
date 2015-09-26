@@ -116,12 +116,12 @@ var GUI = (function() {
     render: function() {
       var header = '<h2>Users Tasks</h2>';
       this.$el.html(header);
-      var userTaskExists = this.collection.where('creator', userSession) || this.collection.where('assignee', userSession);
+      var userTaskExists = this.collection.where({creator: userSession}) || this.collection.where({assignee: userSession});
 
       // loop through users tasks
       if (userTaskExists) {
         this.collection.each(function(task) {
-          if (task.get('creator') || task.get('assignee') === userSession) {
+          if (task.get('creator') === userSession || task.get('assignee') === userSession) {
             var taskView = new TaskView({ model: task });
             console.log(taskView);
             taskView.render();
