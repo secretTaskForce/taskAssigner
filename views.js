@@ -111,7 +111,7 @@ var GUI = (function() {
     }
   });
 
-  // users tasks collection view
+  // users tasks collection view (creator)
   var UsersTasksView = Backbone.View.extend({
     render: function() {
       var header = '<h2>Users Tasks</h2>';
@@ -121,13 +121,7 @@ var GUI = (function() {
       // loop through users tasks
       if (userTaskExists) {
         this.collection.each(function(task) {
-          if (task.get('creator') === userSession) {
-            var taskView = new TaskView({ model: task });
-            console.log(taskView);
-            taskView.render();
-            this.$el.append(taskView.$el);
-          }
-          if (task.get('assignee') === userSession) {
+          if (task.get('creator') || task.get('assignee') === userSession) {
             var taskView = new TaskView({ model: task });
             console.log(taskView);
             taskView.render();
@@ -141,6 +135,7 @@ var GUI = (function() {
       this.collection.on('change', this.render, this);
     }
   });
+
 
   // ----------------------------------------------------------------------------
   // Users
