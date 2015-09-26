@@ -132,7 +132,6 @@ var GUI = (function() {
       this.collection.each(function(task) {
         if (task.get('creator') === userSession || task.get('assignee') === userSession) {
           var taskView = new TaskView({ model: task });
-          console.log(taskView);
           taskView.render();
           this.$el.append(taskView.$el);
         }
