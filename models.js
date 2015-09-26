@@ -12,10 +12,10 @@ var TaskTrackerModels = (function() {
       currentUser: false
   	},
     validate: function(attrs, options) {
-    if (!attrs.username) {
-      return 'Username must be present';
+      if (!attrs.username) {
+        return 'Username must be present';
+      }
     }
-  },
   });
 
   var Users = Backbone.Collection.extend({
@@ -35,8 +35,9 @@ var TaskTrackerModels = (function() {
       status: 'Unassigned'
   	},
     validate: function(attrs, options) {
-    if (!attrs.title || !attrs.description) {
-      return 'Fields cannot be blank';
+      if (!attrs.title || !attrs.description) {
+        return 'Fields cannot be blank';
+      }
     }
   });
 
