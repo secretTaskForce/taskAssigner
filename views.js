@@ -45,8 +45,10 @@ var GUI = (function() {
       this.model.set('assignee', $(event.currentTarget).val());
       if ($(event.currentTarget).val() === 'Not Assigned') {
         this.model.set('status', 'Unassigned');
+        this.model.save();
       } else {
         this.model.set('status', 'Assigned');
+        this.model.save();
       }
 
     },
@@ -54,8 +56,10 @@ var GUI = (function() {
       if ($(event.currentTarget).val() === 'Done') {
         this.model.set('status', $(event.currentTarget).val());
         app.tasks.remove(app.tasks.where({ status: 'Done' }));
+        this.model.save();
       } else {
         this.model.set('status', $(event.currentTarget).val());
+        this.model.save();
       }
     },
   });
@@ -77,7 +81,8 @@ var GUI = (function() {
     },
     addModel : function () {
       if ($('#title-input').val() && $('#description-input').val()) {
-        this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
+        var taskModel = this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
+        taskModel.save();
         this.remove();
       } else {
         $('.error').html('Fields cannot be blank');
@@ -170,6 +175,7 @@ var GUI = (function() {
       loginView.render();
       $('#app').append(loginView.$el)
       this.model.set('currentUser', false);
+      this.model.save();
       userSession = undefined;
       this.remove();
     }
@@ -204,6 +210,7 @@ var GUI = (function() {
     addUser : function () {
       if ($('#username-input').val() !== '') {
         var userModel = this.collection.add({ username : $('#username-input').val(), currentUser : true });
+        userModel.save();
         var userView = new UserView({ model: userModel });
         userSession = userModel.get('username');
         userView.render();
@@ -216,6 +223,7 @@ var GUI = (function() {
     selectUser: function() {
       var selectedUser = this.collection.where({ 'username': $('#user-select').val() })[0];
       selectedUser.set('currentUser', true);
+      selectedUser.save();
       userSession = selectedUser.get('username');
       var userView = new UserView({ model: selectedUser });
       userView.render();
