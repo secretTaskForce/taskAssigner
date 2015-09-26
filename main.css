@@ -29,18 +29,25 @@ body {
   color: white;
 }
 
+/* Application Styles */
+
+#app {
+  margin: 0 auto;
+  width: 40%;
+}
+
 div {
-  background-color: #999;
+  background-color: #777;
   padding: 10px;
   margin: 10px 0;
 }
 
 div div {
-  background-color: #555;
+  background-color: #888;
 }
 
 div div div {
-  background-color: #222;
+  background-color: #999;
 }
 
 /* Errors */
