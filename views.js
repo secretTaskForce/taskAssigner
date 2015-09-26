@@ -63,19 +63,24 @@ var GUI = (function() {
       var title = 'Title <input type="text" id="title-input">';
       var description = 'Description <textarea id="description-input"></textarea>';
       var submit = '<button id="add-task">Add Task</button>';
-      this.$el.html(header + error + title + description + submit);
+      var cancel = '<button id="cancel-task">Cancel</button>';
+      this.$el.html(header + error + title + description + submit + cancel);
     },
     events : {
-      'click #add-task': 'addModel'
+      'click #add-task': 'addModel',
+      'click #cancel-task': 'clear'
     },
     addModel : function () {
       if ($('#title-input').val() && $('#description-input').val()) {
         this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
         this.remove();
       } else {
-        $('.error').html('Fields cannot be blank')
+        $('.error').html('Fields cannot be blank');
       }
 
+    },
+    clear : function () {
+      this.remove();
     }
   });
 
