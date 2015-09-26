@@ -11,23 +11,23 @@ $(function() { //when DOM is ready...
 
 	app.tasks = new TaskTrackerModels.Tasks([
 		{
-			title: 'Bathroom',
-			description: 'Clean Bathroom',
+			title: 'Insurrection',
+			description: 'Start an insurrection',
 			creator: 'David',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
-			title: 'Floors',
-			description: 'Clean Floors',
-			creator: 'David',
+			title: 'General Strike',
+			description: 'Facilitate a general strike',
+			creator: 'Molly',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
 		{
-			title: 'Kitchen',
-			description: 'Clean Kitchen',
-			creator: 'David',
+			title: 'Abolish Capitalism',
+			description: 'Also abolish the state',
+			creator: 'Stephen',
 			status: 'Unassigned',
 			assignee: 'Not Assigned'
 		},
