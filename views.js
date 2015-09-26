@@ -51,7 +51,12 @@ var GUI = (function() {
 
     },
     changeStatus: function(event) {
-      this.model.set('status', $(event.currentTarget).val());
+      if ($(event.currentTarget).val() === 'Done') {
+        this.model.set('status', $(event.currentTarget).val());
+        app.tasks.remove(app.tasks.where({ status: 'Done' }));
+      } else {
+        this.model.set('status', $(event.currentTarget).val());
+      }
     },
   });
 
@@ -107,6 +112,7 @@ var GUI = (function() {
     },
     initialize : function () {
       this.collection.on('add', this.render, this);
+      this.collection.on('remove', this.render, this);
       this.collection.on('change', this.render, this);
     },
     newTask: function() {
@@ -116,27 +122,29 @@ var GUI = (function() {
     }
   });
 
-  // users tasks collection view 
+  // users tasks collection view
   var UsersTasksView = Backbone.View.extend({
     render: function() {
       var header = '<h2>'+ userSession + '\'s Tasks</h2>';
+      var successMessage = $('<p class="success"></p>');
       this.$el.html(header);
-      var userTaskExists = this.collection.where({creator: userSession}) || this.collection.where({assignee: userSession});
+      this.$el.append(successMessage);
 
       // loop through users tasks
-      if (userTaskExists) {
-        this.collection.each(function(task) {
-          if (task.get('creator') === userSession || task.get('assignee') === userSession) {
-            var taskView = new TaskView({ model: task });
-            console.log(taskView);
-            taskView.render();
-            this.$el.append(taskView.$el);
-          }
-        }, this);
-      }
+      this.collection.each(function(task) {
+        if (task.get('creator') === userSession || task.get('assignee') === userSession) {
+          var taskView = new TaskView({ model: task });
+          console.log(taskView);
+          taskView.render();
+          this.$el.append(taskView.$el);
+        } else {
+          $('.success').html('All tasks completed - One step closer to world liberation');
+        }
+      }, this);
     },
     initialize : function () {
       this.collection.on('add', this.render, this);
+      this.collection.on('remove', this.render, this);
       this.collection.on('change', this.render, this);
     }
   });
@@ -150,7 +158,7 @@ var GUI = (function() {
   var UserView = Backbone.View.extend({
     render: function() {
       var username = '<h2 class="logout" id="username">' + this.model.get('username') + '</h2>';
-      var logout = '<button class="logout" id="button">Logout</button>';
+      var logout = '<button class="logout" id="logout">Logout</button>';
       var unassignedTasks = new UnassignedTasksView({ collection: app.tasks });
       var usersTasks = new UsersTasksView({ collection: app.tasks });
       unassignedTasks.render();
