@@ -43,7 +43,12 @@ var GUI = (function() {
     },
     assignTask: function(event) {
       this.model.set('assignee', $(event.currentTarget).val());
-      this.model.set('status', 'Assigned');
+      if ($(event.currentTarget).val() === 'Not Assigned') {
+        this.model.set('status', 'Unassigned');
+      } else {
+        this.model.set('status', 'Assigned');
+      }
+
     },
     changeStatus: function(event) {
       this.model.set('status', $(event.currentTarget).val());
