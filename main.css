@@ -47,7 +47,10 @@ button.logout {
 
 /* Application Styles */
 
-
+input, textarea {
+  display: block;
+  margin-bottom: 10px;
+}
 
 /* Alerts */
 
