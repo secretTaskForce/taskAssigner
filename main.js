@@ -2,7 +2,7 @@
 
 var app = {};
 
-$(function() { //when DOM is ready...
+$(function() {
 	app.users = new TaskTrackerModels.Users();
 
 	app.tasks= new TaskTrackerModels.Tasks();
