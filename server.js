@@ -77,7 +77,7 @@ function putOne(collname) {
 function postOne(collname) {
 	app.post('/'+collname, function (req, res) {
 		console.log('Receiving new model...');
-		var newid = collname.length -2;
+		var newid = collname.length;
 		console.log('Assigning id of %s',newid);
 		var obj = req.body;
 		obj.id = newid;
