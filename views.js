@@ -11,6 +11,7 @@ var GUI = (function() {
 
   // single task view
   var TaskView = Backbone.View.extend({
+    id: 'task-view',
     render: function() {
       var title = '<h3 class="title">' + this.model.get('title') + '</h3>';
       var description = '<p class="description">' + this.model.get('description') + '</p>';
@@ -32,9 +33,9 @@ var GUI = (function() {
       statusList.val(this.model.get('status'));
 
       this.$el.html(title + description + creator);
-      this.$el.append('<h5>Assign Task</h5>');
+      this.$el.append('<h5>Assignee</h5>');
       this.$el.append(assigneeList);
-      this.$el.append('<h5>Set Status</h5>');
+      this.$el.append('<h5>Status</h5>');
       this.$el.append(statusList);
     },
     events : {
@@ -66,6 +67,7 @@ var GUI = (function() {
 
   // create tasks view - form for adding new tasks
   var CreateTaskView = Backbone.View.extend({
+    id: 'create-task-view',
     render: function() {
       var error = '<p class="error"></p>'
       var header = '<h2>Create Task</h2>'
@@ -96,6 +98,7 @@ var GUI = (function() {
 
   // unassigned tasks collection view
   var UnassignedTasksView = Backbone.View.extend({
+    id: 'unassigned-tasks-view',
     render: function() {
       var header = '<h2>Unassigned Tasks</h2>';
       var newTask = '<button id="new-task">New Task</button>';
@@ -129,6 +132,7 @@ var GUI = (function() {
 
   // users tasks collection view
   var UsersTasksView = Backbone.View.extend({
+    id: 'users-tasks-view',
     render: function() {
       var header = '<h2>'+ userSession + '\'s Tasks</h2>';
       this.$el.html(header);
@@ -156,6 +160,7 @@ var GUI = (function() {
 
   // user view - signed in user page
   var UserView = Backbone.View.extend({
+    id: 'user-view',
     render: function() {
       var username = '<h2 class="logout" id="username">' + this.model.get('username') + '</h2>';
       var logout = '<button class="logout" id="logout">Logout</button>';
@@ -183,12 +188,13 @@ var GUI = (function() {
 
   // users collection view
   var LoginView = Backbone.View.extend({ // was users view
+    id: 'login-view',
     render: function() {
       var error = '<p class="error"></p>'
       var loginHeader = '<h2 class="text">Log In</h2>';
       var userHeader = '<h4 class="text">Create User</h4>';
       var username = 'Username <input type="text" id="username-input">';
-      var submit = '<button id="add-user">Add User</button>';
+      var submit = '<button id="add-user">Create User</button>';
       var selectHeader = '<h4 class="text">Or Select User</h4>';
       var users = '<select id="user-select"><option>Select User</option>';
 
