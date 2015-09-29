@@ -82,12 +82,12 @@ var GUI = (function() {
       'click #cancel-task': 'clear'
     },
     addModel : function () {
-      if ($('#title-input').val() && $('#description-input').val()) {
+      if ($('#title-input').val()) {
         var taskModel = this.collection.add({ creator: userSession, title: $('#title-input').val(), description: $('#description-input').val() });
         taskModel.save();
         this.remove();
       } else {
-        $('.error').html('Fields cannot be blank');
+        $('.error').html('Title cannot be blank');
       }
 
     },
